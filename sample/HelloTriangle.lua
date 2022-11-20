@@ -6,8 +6,6 @@ os.loadAPI("/Biou3D/Biou3D.lua")
 monitor = peripheral.find("monitor")
 if monitor ~= nil then
     monitor.setTextScale(0.5)
-    monitor.setBackgroundColor(colors.black)
-    monitor.clear()
     term.redirect(monitor)
 end
 
@@ -36,9 +34,7 @@ Biou3D.DestroyDataBuffer(vertexBuffer)
 -- Display the image
 term.clear()
 for i = 1, #image do
-    term.setCursorPos(i % winX, math.floor(i / winX))
-    term.setBackgroundColor(image[i])
-    term.write(" ")
+    paintutils.drawPixel(i % winX, math.floor(i / winX), image[i])
 end
 
 
