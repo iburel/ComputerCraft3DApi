@@ -33,12 +33,18 @@
 local expect = dofile("rom/modules/main/cc/expect.lua").expect
 os.loadAPI("/Biou3D/Biou3D.lua")
 
+local winX = 0
+local winY = 0
+
 function Init(windowWidth, windowHeight)
     expect(1, windowWidth, "number")
     expect(2, windowHeight, "number")
 
     assert(windowWidth > 0, "windowWidth must be greater than 0")
     assert(windowHeight > 0, "windowHeight must be greater than 0")
+
+    winX = windowWidth
+    winY = windowHeight
 
     Biou3D.Init(windowWidth, windowHeight)
 end
@@ -128,5 +134,8 @@ function UnbindFragmentShader()
 end
 
 function Draw()
+    assert(winX > 0, "windowWidth must be greater than 0")
+    assert(winY > 0, "windowHeight must be greater than 0")
+
     return Biou3D.Draw()
 end

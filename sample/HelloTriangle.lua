@@ -3,13 +3,22 @@
 os.loadAPI("/Biou3D/Biou3D.lua")
 
 -- Init Biou3D
+monitor = peripheral.find("monitor")
+if monitor ~= nil then
+    monitor.setTextScale(0.5)
+    monitor.setBackgroundColor(colors.black)
+    monitor.clear()
+    term.redirect(monitor)
+end
+
 winX, winY = term.getSize()
+Biou3D.Init(winX, winY)
 
 -- Create a vertex buffer
 local vertexBuffer = Biou3D.CreateDataBuffer({
-    {-0.5, -0.5, -0.5},
-    {0.5, -0.5, -0.5},
-    {-0.5, 0.5, -0.5}
+    {0, -0.5, 0, 1},
+    {-0.5, 0.5, 0, 1},
+    {0.5, 0.5, 0, 1}
 })
 
 -- Bind the vertex buffer
@@ -25,11 +34,11 @@ Biou3D.UnbindVertexBuffer()
 Biou3D.DestroyDataBuffer(vertexBuffer)
 
 -- Display the image
-term.Clear()
+term.clear()
 for i = 1, #image do
-    term.SetCursorPos(i % winX, math.floor(i / winX))
-    term.SetBackgroundColor(image[i])
-    term.Write(" ")
+    term.setCursorPos(i % winX, math.floor(i / winX))
+    term.setBackgroundColor(image[i])
+    term.write(" ")
 end
 
 

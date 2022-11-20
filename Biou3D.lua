@@ -193,6 +193,7 @@ function Draw()
         if valid then
             validTriangles[#validTriangles + 1] = triangle
             validBuffersTriangles[#validBuffersTriangles + 1] = buffersTriangles[i]
+            print(validBuffersTriangles[1])
         end
     end
 
@@ -243,11 +244,13 @@ function Draw()
 
                     -- Interpolate buffers
                     local interpolatedBuffers = {}
-                    for j = 1, #buffersTriangle[1] do
-                        local a = Vector.Multiply(buffersTriangle[1][j], (1 - u - v))
-                        local b = Vector.Multiply(buffersTriangle[2][j], u)
-                        local c = Vector.Multiply(buffersTriangle[3][j], v)
-                        interpolatedBuffers[j] = Vector.Add(a, Vector.Add(b, c))
+                    if buffersTriangle ~= nil then
+                        for j = 1, #buffersTriangle[1] do
+                            local a = Vector.Multiply(buffersTriangle[1][j], (1 - u - v))
+                            local b = Vector.Multiply(buffersTriangle[2][j], u)
+                            local c = Vector.Multiply(buffersTriangle[3][j], v)
+                            interpolatedBuffers[j] = Vector.Add(a, Vector.Add(b, c))
+                        end
                     end
 
                     -- Call fragment shader
