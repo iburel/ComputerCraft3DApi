@@ -29,8 +29,7 @@
 
 -------------------------------------------------------------------
 
-os.loadAPI("src/Matrix/Vector2.lua")
-os.loadAPI("src/Matrix/Vector4.lua")
+os.loadAPI("/Biou3D/src/Matrix/Vector.lua")
 
 -- Internal variables
 local winX = 0
@@ -73,14 +72,9 @@ function Init(windowWidth, windowHeight)
 end
 
 -- Function to create a data buffer object with the given vectors and return its ID
-function CreateDataBuffer(size, ...)
+function CreateDataBuffer(datas)
     dataBuffersLastID = dataBuffersLastID + 1
-    local dataBuffer = {}
-    dataBuffer.size = size
-    for i = 1, size do
-        dataBuffer[i] = select(i, ...)
-    end
-    dataBuffers[dataBuffersLastID] = dataBuffer
+    dataBuffers[dataBuffersLastID] = datas
     return dataBuffersLastID
 end
 
@@ -167,7 +161,7 @@ function Draw()
     -- Divide by w
     local finalVertex = {}
     for i = 1, #transformedVertex do
-        finalVertex[i] = Vector4.DivideByW(transformedVertex[i])
+        finalVertex[i] = Vector.DivideByW(transformedVertex[i])
     end
 
     -- Form triangles from vertex
@@ -225,19 +219,19 @@ function Draw()
                 -- Keep only x and y from triangle
                 local triangle2D = {}
                 for j = 1, 3 do
-                    triangle2D[j] = Vector2.Create(triangle[j][1], triangle[j][2])
+                    triangle2D[j] = { triangle[j][1], triangle[j][2] }
                 end
 
                 -- Calculate barycentric coordinates
-                local p = Vector2.Create(x / winX * 2 - 1, y / winY * 2 - 1)
-                local v0 = Vector2.Subtract(triangle2D[2], triangle2D[1])
-                local v1 = Vector2.Subtract(triangle2D[3], triangle2D[1])
-                local v2 = Vector2.Subtract(p, triangle2D[1])
-                local dot00 = Vector2.Dot(v0, v0)
-                local dot01 = Vector2.Dot(v0, v1)
-                local dot02 = Vector2.Dot(v0, v2)
-                local dot11 = Vector2.Dot(v1, v1)
-                local dot12 = Vector2.Dot(v1, v2)
+                local p = { x / winX * 2 - 1, y / winY * 2 - 1 }
+                local v0 = Vector.Subtract(triangle2D[2], triangle2D[1])
+                local v1 = Vector.Subtract(triangle2D[3], triangle2D[1])
+                local v2 = Vector.Subtract(p, triangle2D[1])
+                local dot00 = Vector.Dot(v0, v0)
+                local dot01 = Vector.Dot(v0, v1)
+                local dot02 = Vector.Dot(v0, v2)
+                local dot11 = Vector.Dot(v1, v1)
+                local dot12 = Vector.Dot(v1, v2)
                 local invDenom = 1 / (dot00 * dot11 - dot01 * dot01)
                 local u = (dot11 * dot02 - dot01 * dot12) * invDenom
                 local v = (dot00 * dot12 - dot01 * dot02) * invDenom

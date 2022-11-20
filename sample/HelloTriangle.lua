@@ -1,9 +1,9 @@
 -- Sample to test a simple triangle
 
-os.loadAPI("../Biou3D.lua")
+os.loadAPI("/Biou3D/Biou3D.lua")
 
 -- Init Biou3D
-winX, winY = term.GetSize()
+winX, winY = term.getSize()
 
 -- Create a vertex buffer
 local vertexBuffer = Biou3D.CreateDataBuffer({

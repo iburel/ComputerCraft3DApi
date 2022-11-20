@@ -1,203 +1,84 @@
 -- Tests for matrix operations
 
-os.loadAPI("../src/Matrix/Matrix.lua")
-os.loadAPI("../src/Matrix/Matrix2.lua")
-os.loadAPI("../src/Matrix/Matrix3.lua")
-os.loadAPI("../src/Matrix/Matrix4.lua")
-
--- Test matrix creation
-local function TestMatrixCreation()
-    local m = Matrix.Create(8, 5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64)
-    assert(m.rows == 8)
-    assert(m.cols == 5)
-    assert(m[1][1] == 1)
-    assert(m[1][2] == 2)
-    assert(m[1][3] == 3)
-    assert(m[1][4] == 4)
-    assert(m[1][5] == 5)
-    assert(m[2][1] == 6)
-    assert(m[2][2] == 7)
-    assert(m[2][3] == 8)
-    assert(m[2][4] == 9)
-    assert(m[2][5] == 10)
-    assert(m[3][1] == 11)
-    assert(m[3][2] == 12)
-    assert(m[3][3] == 13)
-    assert(m[3][4] == 14)
-    assert(m[3][5] == 15)
-    assert(m[4][1] == 16)
-    assert(m[4][2] == 17)
-    assert(m[4][3] == 18)
-    assert(m[4][4] == 19)
-    assert(m[4][5] == 20)
-    assert(m[5][1] == 21)
-    assert(m[5][2] == 22)
-    assert(m[5][3] == 23)
-    assert(m[5][4] == 24)
-    assert(m[5][5] == 25)
-    assert(m[6][1] == 26)
-    assert(m[6][2] == 27)
-    assert(m[6][3] == 28)
-    assert(m[6][4] == 29)
-    assert(m[6][5] == 30)
-    assert(m[7][1] == 31)
-    assert(m[7][2] == 32)
-    assert(m[7][3] == 33)
-    assert(m[7][4] == 34)
-    assert(m[7][5] == 35)
-    assert(m[8][1] == 36)
-    assert(m[8][2] == 37)
-    assert(m[8][3] == 38)
-    assert(m[8][4] == 39)
-    assert(m[8][5] == 40)
-end
-
-local function TestMatrix2Creation()
-    local m = Matrix2.Create(1, 2, 3, 4)
-    assert(m.rows == 2)
-    assert(m.cols == 2)
-    assert(m[1][1] == 1)
-    assert(m[1][2] == 2)
-    assert(m[1][3] == nil)
-    assert(m[2][1] == 3)
-    assert(m[2][2] == 4)
-    assert(m[2][3] == nil)
-    assert(m[3] == nil)
-end
-
-local function TestMatrix3Creation()
-    local m = Matrix3.Create(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    assert(m.rows == 3)
-    assert(m.cols == 3)
-    assert(m[1][1] == 1)
-    assert(m[1][2] == 2)
-    assert(m[1][3] == 3)
-    assert(m[1][4] == nil)
-    assert(m[2][1] == 4)
-    assert(m[2][2] == 5)
-    assert(m[2][3] == 6)
-    assert(m[2][4] == nil)
-    assert(m[3][1] == 7)
-    assert(m[3][2] == 8)
-    assert(m[3][3] == 9)
-    assert(m[3][4] == nil)
-    assert(m[4] == nil)
-end
-
-local function TestMatrix4Creation()
-    local m = Matrix4.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
-    assert(m.rows == 4)
-    assert(m.cols == 4)
-    assert(m[1][1] == 1)
-    assert(m[1][2] == 2)
-    assert(m[1][3] == 3)
-    assert(m[1][4] == 4)
-    assert(m[1][5] == nil)
-    assert(m[2][1] == 5)
-    assert(m[2][2] == 6)
-    assert(m[2][3] == 7)
-    assert(m[2][4] == 8)
-    assert(m[2][5] == nil)
-    assert(m[3][1] == 9)
-    assert(m[3][2] == 10)
-    assert(m[3][3] == 11)
-    assert(m[3][4] == 12)
-    assert(m[3][5] == nil)
-    assert(m[4][1] == 13)
-    assert(m[4][2] == 14)
-    assert(m[4][3] == 15)
-    assert(m[4][4] == 16)
-    assert(m[4][5] == nil)
-    assert(m[5] == nil)
-end
+os.loadAPI("/Biou3D/src/Matrix/Matrix.lua")
 
 -- Test matrix dot
-local function TestMatrixDot()
-    local m1 = Matrix.Create(5, 3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25)
-    local m2 = Matrix.Create(3, 4, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24)
-    local m3 = m1:Dot(m2)
-    assert(m3.rows == 5)
-    assert(m3.cols == 4)
-    assert(m3[1][1] == 150)
-    assert(m3[1][2] == 160)
-    assert(m3[1][3] == 170)
-    assert(m3[1][4] == 180)
-    assert(m3[2][1] == 342)
-    assert(m3[2][2] == 364)
-    assert(m3[2][3] == 386)
-    assert(m3[2][4] == 408)
-    assert(m3[3][1] == 534)
-    assert(m3[3][2] == 568)
-    assert(m3[3][3] == 602)
-    assert(m3[3][4] == 636)
-    assert(m3[4][1] == 726)
-    assert(m3[4][2] == 772)
-    assert(m3[4][3] == 818)
-    assert(m3[4][4] == 864)
-    assert(m3[5][1] == 918)
-    assert(m3[5][2] == 976)
-    assert(m3[5][3] == 1034)
-    assert(m3[5][4] == 1092)
+local function TestMatrix3x3Dot3x3()
+    local matrix1 = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    }
+    local matrix2 = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    }
+    local result = Matrix.Dot(matrix1, matrix2)
+    assert(result[1][1] == 30)
+    assert(result[1][2] == 36)
+    assert(result[1][3] == 42)
+    assert(result[2][1] == 66)
+    assert(result[2][2] == 81)
+    assert(result[2][3] == 96)
+    assert(result[3][1] == 102)
+    assert(result[3][2] == 126)
+    assert(result[3][3] == 150)
 end
 
-local function TestMatrix2Dot()
-    local m1 = Matrix2.Create(1, 2, 3, 4)
-    local m2 = Matrix2.Create(5, 6, 7, 8)
-    local m3 = m1:Dot(m2)
-    assert(m3.rows == 2)
-    assert(m3.cols == 2)
-    assert(m3[1][1] == 19)
-    assert(m3[1][2] == 22)
-    assert(m3[2][1] == 43)
-    assert(m3[2][2] == 50)
+local function TestMatrix2x2Dot2x2()
+    local matrix1 = {
+        {1, 2},
+        {3, 4}
+    }
+    local matrix2 = {
+        {5, 6},
+        {7, 8}
+    }
+    local result = Matrix.Dot(matrix1, matrix2)
+    assert(result[1][1] == 19)
+    assert(result[1][2] == 22)
+    assert(result[2][1] == 43)
+    assert(result[2][2] == 50)
 end
 
-local function TestMatrix3Dot()
-    local m1 = Matrix3.Create(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    local m2 = Matrix3.Create(10, 11, 12, 13, 14, 15, 16, 17, 18)
-    local m3 = m1:Dot(m2)
-    assert(m3.rows == 3)
-    assert(m3.cols == 3)
-    assert(m3[1][1] == 84)
-    assert(m3[1][2] == 90)
-    assert(m3[1][3] == 96)
-    assert(m3[2][1] == 201)
-    assert(m3[2][2] == 216)
-    assert(m3[2][3] == 231)
-    assert(m3[3][1] == 318)
-    assert(m3[3][2] == 342)
-    assert(m3[3][3] == 366)
+local function TestMatrix3x2Dot2x3()
+    local matrix1 = {
+        {1, 2, 3},
+        {4, 5, 6}
+    }
+    local matrix2 = {
+        {7, 8},
+        {9, 10},
+        {11, 12}
+    }
+    local result = Matrix.Dot(matrix1, matrix2)
+    assert(result[1][1] == 58)
+    assert(result[1][2] == 64)
+    assert(result[2][1] == 139)
+    assert(result[2][2] == 154)
 end
 
-local function TestMatrix4Dot()
-    local m1 = Matrix4.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
-    local m2 = Matrix4.Create(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
-    local m3 = m1:Dot(m2)
-    assert(m3.rows == 4)
-    assert(m3.cols == 4)
-    assert(m3[1][1] == 250)
-    assert(m3[1][2] == 260)
-    assert(m3[1][3] == 270)
-    assert(m3[1][4] == 280)
-    assert(m3[2][1] == 618)
-    assert(m3[2][2] == 644)
-    assert(m3[2][3] == 670)
-    assert(m3[2][4] == 696)
-    assert(m3[3][1] == 986)
-    assert(m3[3][2] == 1028)
-    assert(m3[3][3] == 1070)
-    assert(m3[3][4] == 1112)
-    assert(m3[4][1] == 1354)
-    assert(m3[4][2] == 1412)
-    assert(m3[4][3] == 1470)
-    assert(m3[4][4] == 1528)
+local function TestMatrix2x3Dot3x2()
+    local matrix1 = {
+        {1, 2},
+        {3, 4},
+        {5, 6}
+    }
+    local matrix2 = {
+        {7, 8, 9},
+        {10, 11, 12}
+    }
+    local result = Matrix.Dot(matrix1, matrix2)
+    assert(result[1][1] == 27)
+    assert(result[1][2] == 30)
+    assert(result[1][3] == 33)
+    assert(result[2][1] == 61)
+    assert(result[2][2] == 68)
+    assert(result[2][3] == 75)
 end
 
-TestMatrixCreation()
-TestMatrix2Creation()
-TestMatrix3Creation()
-TestMatrix4Creation()
-TestMatrixDot()
-TestMatrix2Dot()
-TestMatrix3Dot()
-TestMatrix4Dot()
+TestMatrix3x3Dot3x3()
+TestMatrix2x2Dot2x2()
+TestMatrix3x2Dot2x3()
+TestMatrix2x3Dot3x2()
