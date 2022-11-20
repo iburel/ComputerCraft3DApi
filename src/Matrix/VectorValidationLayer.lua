@@ -12,6 +12,7 @@
 -- Vector.Dot(vector, vector) -> int
 -- Vector.DotMatrix(matrix, vector) -> vector
 -- Vector.DivideByW(vector) -> vector
+-- Vector.Normalize(vector) -> vector
 
 -------------------------------------------------------------------
 
@@ -163,4 +164,15 @@ function DivideByW(vector)
     assert(#vector == 4, "Vector.DivideByW: vector must have a size of 4")
 
     return Vector.DivideByW(vector)
+end
+
+-- Normalize a vector
+function Normalize(vector)
+    expect(1, vector, "table")
+
+    for i = 1, #vector do
+        expect(1, vector[i], "number")
+    end
+
+    return Vector.Normalize(vector)
 end

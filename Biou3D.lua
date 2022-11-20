@@ -16,8 +16,8 @@
 -- Biou3D.BindVertexBuffer(int id) -> void
 -- Biou3D.UnbindVertexBuffer() -> void
 
--- Biou3D.BindDataBuffer(int id) -> void
--- Biou3D.UnbindDataBuffer() -> void
+-- Biou3D.BindDataBuffer(int id, int slot) -> void
+-- Biou3D.UnbindDataBuffer(int slot) -> void
 
 -- Biou3D.BindVertexShader(int id) -> void
 -- Biou3D.UnbindVertexShader() -> void
@@ -169,14 +169,20 @@ function Draw()
     local buffersTriangles = {}
     for i = 1, #finalVertex, 3 do
         triangles[#triangles + 1] = { finalVertex[i], finalVertex[i + 1], finalVertex[i + 2] }
-        for j = 1, #buffers do
-            buffersTriangles[#buffersTriangles + 1] = { buffers[j][i], buffers[j][i + 1], buffers[j][i + 2] }
+    end
+    for i = 1, #buffers do
+        buffersTriangles[i] = {}
+        for j = 1, #buffers[i], 3 do
+            buffersTriangles[i][#buffersTriangles[i] + 1] = { buffers[i][j], buffers[i][j + 1], buffers[i][j + 2] }
         end
     end
 
     -- Remove triangles if all vertices is outside the screen
     local validTriangles = {}
     local validBuffersTriangles = {}
+    for i = 1, #buffersTriangles do
+        validBuffersTriangles[i] = {}
+    end
     for i = 1, #triangles do
         local triangle = triangles[i]
         local valid = true
@@ -192,8 +198,9 @@ function Draw()
         end
         if valid then
             validTriangles[#validTriangles + 1] = triangle
-            validBuffersTriangles[#validBuffersTriangles + 1] = buffersTriangles[i]
-            print(validBuffersTriangles[1])
+            for j = 1, #buffersTriangles do
+                validBuffersTriangles[j][#validBuffersTriangles[j] + 1] = buffersTriangles[j][i]
+            end
         end
     end
 
@@ -209,7 +216,10 @@ function Draw()
 
     for i = 1, #validTriangles do
         local triangle = validTriangles[i]
-        local buffersTriangle = validBuffersTriangles[i]
+        local buffersTriangle = {}
+        for j = 1, #validBuffersTriangles do
+            buffersTriangle[j] = validBuffersTriangles[j][i]
+        end
 
         -- Find bounding box
         local minX = math.floor((math.min(triangle[1][1], triangle[2][1], triangle[3][1]) + 1) * winX / 2)
@@ -248,10 +258,11 @@ function Draw()
                     -- Interpolate buffers
                     local interpolatedBuffers = {}
                     if buffersTriangle ~= nil then
-                        for j = 1, #buffersTriangle[1] do
-                            local a = Vector.Multiply(buffersTriangle[1][j], (1 - u - v))
-                            local b = Vector.Multiply(buffersTriangle[2][j], u)
-                            local c = Vector.Multiply(buffersTriangle[3][j], v)
+                        for j = 1, #buffersTriangle do
+                            interpolatedBuffers[j] = {}
+                            local a = Vector.MultiplyByScalar(buffersTriangle[j][1], (1 - u - v))
+                            local b = Vector.MultiplyByScalar(buffersTriangle[j][2], u)
+                            local c = Vector.MultiplyByScalar(buffersTriangle[j][3], v)
                             interpolatedBuffers[j] = Vector.Add(a, Vector.Add(b, c))
                         end
                     end

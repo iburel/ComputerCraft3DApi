@@ -1,23 +1,21 @@
 -- Sample to test a simple cube
 
-os.loadAPI("/Biou3D/Biou3DValidationLayer.lua")
-Biou3D = Biou3DValidationLayer
-
-os.loadAPI("/Biou3D/src/Matrix/VectorValidationLayer.lua")
-Vector = VectorValidationLayer
+os.loadAPI("/Biou3D/Biou3D.lua")
+os.loadAPI("/Biou3D/src/Matrix/Vector.lua")
+os.loadAPI("/Biou3D/src/Matrix/Matrix.lua")
 
 -- Init Biou3D
-monitor = peripheral.find("monitor")
+local monitor = peripheral.find("monitor")
 if monitor ~= nil then
     monitor.setTextScale(0.5)
     term.redirect(monitor)
 end
 
-winX, winY = term.getSize()
+local winX, winY = term.getSize()
 Biou3D.Init(winX, winY)
 
 -- Create a vertex buffer
-local vertexBufferDatas = {
+local vertexBuffer = Biou3D.CreateDataBuffer({
     { -1.0, -1.0, -1.0, 1.0 },
     { -1.0, -1.0, 1.0, 1.0 },
     { -1.0, 1.0, 1.0, 1.0 },
@@ -54,28 +52,77 @@ local vertexBufferDatas = {
     { 1.0, 1.0, 1.0, 1.0 },
     { -1.0, 1.0, 1.0, 1.0 },
     { 1.0, -1.0, 1.0, 1.0 }
-}
+})
 
-for i = 1, #vertexBufferDatas do
-    vertexBufferDatas[i] = Vector.DivideByScalar(vertexBufferDatas[i], 2)
+-- Create a color buffer
+local colorBuffer = Biou3D.CreateDataBuffer({
+    { 1 }, { 1 }, { 1 },
+    { 2 }, { 2 }, { 2 },
+    { 4 }, { 4 }, { 4 },
+    { 2 }, { 2 }, { 2 },
+    { 1 }, { 1 }, { 1 },
+    { 4 }, { 4 }, { 4 },
+    { 64 }, { 64 }, { 64 },
+    { 128 }, { 128 }, { 128 },
+    { 128 }, { 128 }, { 128 },
+    { 512 }, { 512 }, { 512 },
+    { 512 }, { 512 }, { 512 },
+    { 64 }, { 64 }, { 64 },
+})
+
+-- Create vertex shader
+local matrix = Matrix.CreateIdentity(4)
+matrix = Matrix.Scale(matrix, { 0.2, 0.2, 0.2 })
+matrix = Matrix.Rotate(matrix, Vector.Normalize({ 1, 1, 1 }), math.pi / 4)
+local function vertexShaderFunc(winX, winY, vertice, dataBuffers)
+    return Vector.DotMatrix(matrix, vertice)
 end
 
-vertexBuffer = Biou3D.CreateDataBuffer(vertexBufferDatas)
+local vertexShader = Biou3D.CreateVertexShader(vertexShaderFunc)
 
--- Bind the vertex buffer
-Biou3D.BindVertexBuffer(vertexBuffer)
+-- Create fragment shader
+local function fragmentShaderFunc(winX, winY, x, y, z, dataBuffers)
+    local color = dataBuffers[1][1]
+    return color, z
+end
 
--- Draw the cube
-image = Biou3D.Draw()
+local fragmentShader = Biou3D.CreateFragmentShader(fragmentShaderFunc)
 
--- Unbind the vertex buffer
-Biou3D.UnbindVertexBuffer()
+while true do
+    -- Bind the vertex buffer
+    Biou3D.BindVertexBuffer(vertexBuffer)
 
--- Delete the vertex buffer
-Biou3D.DestroyDataBuffer(vertexBuffer)
+    -- Bind the color buffer
+    Biou3D.BindDataBuffer(colorBuffer, 1)
 
--- Display the image
-term.clear()
-for i = 1, #image do
-    paintutils.drawPixel(i % winX, math.floor(i / winX), image[i])
+    -- Bind the vertex shader
+    Biou3D.BindVertexShader(vertexShader)
+
+    -- Bind the fragment shader
+    Biou3D.BindFragmentShader(fragmentShader)
+
+    -- Draw the cube
+    matrix = Matrix.Rotate(matrix, Vector.Normalize({ 1, 1, 1 }), math.pi / 30)
+    local image = Biou3D.Draw()
+
+    -- Unbind the fragment shader
+    Biou3D.UnbindFragmentShader()
+
+    -- Unbind the vertex shader
+    Biou3D.UnbindVertexShader()
+
+    -- Unbind the color buffer
+    Biou3D.UnbindDataBuffer(1)
+
+    -- Unbind the vertex buffer
+    Biou3D.UnbindVertexBuffer()
+
+    -- Display the image
+    term.clear()
+    for i = 1, #image do
+        image[i] = math.floor(image[i] + 0.5)
+        paintutils.drawPixel(i % winX, math.floor(i / winX), image[i])
+    end
+
+    sleep(0.1)
 end

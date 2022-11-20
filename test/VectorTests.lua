@@ -221,6 +221,47 @@ local function TestVector4DotMatrix()
     assert(result[4] == 1078)
 end
 
+-- Test Divide by w for vector4
+local function TestVector4DivideByW()
+    local vector = {1, 2, 3, 4}
+    local result = Vector.DivideByW(vector)
+    assert(#result == 3)
+    assert(result[1] == 0.25)
+    assert(result[2] == 0.5)
+    assert(result[3] == 0.75)
+end
+
+-- Test vector normalization
+local function TestVectorNormalize()
+    local vector = {1}
+    local result = Vector.Normalize(vector)
+    assert(result[1] == 1)
+end
+
+local function TestVector2Normalize()
+    local vector = {1, 2}
+    local result = Vector.Normalize(vector)
+    assert(result[1] == 0.4472135954999579)
+    assert(result[2] == 0.8944271909999159)
+end
+
+local function TestVector3Normalize()
+    local vector = {1, 2, 3}
+    local result = Vector.Normalize(vector)
+    assert(result[1] == 0.2672612419124244)
+    assert(result[2] == 0.5345224838248488)
+    assert(result[3] == 0.8017837257372732)
+end
+
+local function TestVector4Normalize()
+    local vector = {1, 2, 3, 4}
+    local result = Vector.Normalize(vector)
+    assert(result[1] == 0.18257418583505536)
+    assert(result[2] == 0.3651483716701107)
+    assert(result[3] == 0.5477225575051661)
+    assert(result[4] == 0.7302967433402214)
+end
+
 print("Running matrix tests...")
 print("--------------------------------------")
 
@@ -320,5 +361,25 @@ print("TestVector4DotMatrix...")
 TestVector4DotMatrix()
 print("TestVector4DotMatrix passed!")
 
+print("TestVector4DivideByW...")
+TestVector4DivideByW()
+print("TestVector4DivideByW passed!")
+
+print("TestVectorNormalize...")
+TestVectorNormalize()
+print("TestVectorNormalize passed!")
+
+print("TestVector2Normalize...")
+TestVector2Normalize()
+print("TestVector2Normalize passed!")
+
+print("TestVector3Normalize...")
+TestVector3Normalize()
+print("TestVector3Normalize passed!")
+
+print("TestVector4Normalize...")
+TestVector4Normalize()
+print("TestVector4Normalize passed!")
+
 print("--------------------------------------")
-print("Matrix tests passed!")
+print("Vector tests passed!")

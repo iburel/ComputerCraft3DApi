@@ -17,8 +17,8 @@
 -- ValidationLayer.BindVertexBuffer(int id) -> void
 -- ValidationLayer.UnbindVertexBuffer() -> void
 
--- ValidationLayer.BindDataBuffer(int id) -> void
--- ValidationLayer.UnbindDataBuffer() -> void
+-- ValidationLayer.BindDataBuffer(int id, int slot) -> void
+-- ValidationLayer.UnbindDataBuffer(int slot) -> void
 
 -- ValidationLayer.BindVertexShader(int id) -> void
 -- ValidationLayer.UnbindVertexShader() -> void
@@ -103,14 +103,17 @@ function UnbindVertexBuffer()
     Biou3D.UnbindVertexBuffer()
 end
 
-function BindDataBuffer(id)
+function BindDataBuffer(id, slot)
     expect(1, id, "number")
+    expect(2, slot, "number")
 
-    Biou3D.BindDataBuffer(id)
+    Biou3D.BindDataBuffer(id, slot)
 end
 
-function UnbindDataBuffer()
-    Biou3D.UnbindDataBuffer()
+function UnbindDataBuffer(slot)
+    expect(1, slot, "number")
+
+    Biou3D.UnbindDataBuffer(slot)
 end
 
 function BindVertexShader(id)

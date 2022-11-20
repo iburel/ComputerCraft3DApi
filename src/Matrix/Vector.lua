@@ -11,6 +11,7 @@
 -- Vector.Dot(vector, vector) -> int
 -- Vector.DotMatrix(matrix, vector) -> vector
 -- Vector.DivideByW(vector) -> vector
+-- Vector.Normalize(vector) -> vector
 
 -------------------------------------------------------------------
 
@@ -93,4 +94,14 @@ end
 -- Divide a vector4 by its w component to get a vector3
 function DivideByW(vector)
     return { vector[1] / vector[4], vector[2] / vector[4], vector[3] / vector[4] }
+end
+
+-- Normalize a vector
+function Normalize(vector)
+    local length = 0
+    for i = 1, #vector do
+        length = length + vector[i] * vector[i]
+    end
+    length = math.sqrt(length)
+    return DivideByScalar(vector, length)
 end
