@@ -99,7 +99,7 @@ function MultiplyByScalar(vector, scalar)
         expect(1, vector[i], "number")
     end
 
-    return Vector.Multiply(vector, scalar)
+    return Vector.MultiplyByScalar(vector, scalar)
 end
 
 -- Divide a vector by a scalar
@@ -111,7 +111,7 @@ function DivideByScalar(vector, scalar)
         expect(1, vector[i], "number")
     end
 
-    return Vector.Divide(vector, scalar)
+    return Vector.DivideByScalar(vector, scalar)
 end
 
 -- Dot two vectors together
