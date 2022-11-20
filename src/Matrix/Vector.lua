@@ -4,10 +4,12 @@
 
 -- Vector.Add(vector, vector) -> vector
 -- Vector.Subtract(vector, vector) -> vector
--- Vector.Multiply(vector, float) -> vector
--- Vector.Divide(vector, float) -> vector
+-- Vector.Multiply(vector, vector) -> vector
+-- Vector.Divide(vector, vector) -> vector
+-- Vector.MultiplyByScalar(vector, float) -> vector
+-- Vector.DivideByScalar(vector, float) -> vector
 -- Vector.Dot(vector, vector) -> int
--- Vector.DotWithMatrix(vector, matrix) -> vector
+-- Vector.DotMatrix(matrix, vector) -> vector
 -- Vector.DivideByW(vector) -> vector
 
 -------------------------------------------------------------------
@@ -30,8 +32,26 @@ function Subtract(vector1, vector2)
     return result
 end
 
+-- Multiply two vectors together
+function Multiply(vector1, vector2)
+    local result = {}
+    for i = 1, #vector1 do
+        result[i] = vector1[i] * vector2[i]
+    end
+    return result
+end
+
+-- Divide two vectors
+function Divide(vector1, vector2)
+    local result = {}
+    for i = 1, #vector1 do
+        result[i] = vector1[i] / vector2[i]
+    end
+    return result
+end
+
 -- Multiply a vector by a scalar
-function Multiply(vector, scalar)
+function MultiplyByScalar(vector, scalar)
     local result = {}
     for i = 1, #vector do
         result[i] = vector[i] * scalar
@@ -40,7 +60,7 @@ function Multiply(vector, scalar)
 end
 
 -- Divide a vector by a scalar
-function Divide(vector, scalar)
+function DivideByScalar(vector, scalar)
     local result = {}
     for i = 1, #vector do
         result[i] = vector[i] / scalar
@@ -57,13 +77,15 @@ function Dot(vector1, vector2)
     return result
 end
 
--- Dot a vector with a matrix
-function DotWithMatrix(vector, matrix)
+-- Dot a matrix with a vector
+function DotMatrix(matrix, vector)
     local result = {}
     for i = 1, #matrix do
+        local sum = 0
         for j = 1, #matrix[1] do
-            result[i] = result[i] + matrix[i][j] * vector[j]
+            sum = sum + matrix[i][j] * vector[j]
         end
+        result[i] = sum
     end
     return result
 end

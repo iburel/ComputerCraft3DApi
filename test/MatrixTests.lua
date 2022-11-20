@@ -1,6 +1,7 @@
 -- Tests for matrix operations
 
-os.loadAPI("/Biou3D/src/Matrix/Matrix.lua")
+os.loadAPI("/Biou3D/src/Matrix/MatrixValidationLayer.lua")
+Matrix = MatrixValidationLayer
 
 -- Test matrix dot
 local function TestMatrix3x3Dot3x3()
@@ -78,7 +79,24 @@ local function TestMatrix2x3Dot3x2()
     assert(result[2][3] == 75)
 end
 
+print("Running matrix tests...")
+print("--------------------------------------")
+
+print("TestMatrix3x3Dot3x3...")
 TestMatrix3x3Dot3x3()
+print("TestMatrix3x3Dot3x3 passed!")
+
+print("TestMatrix2x2Dot2x2...")
 TestMatrix2x2Dot2x2()
+print("TestMatrix2x2Dot2x2 passed!")
+
+print("TestMatrix3x2Dot2x3...")
 TestMatrix3x2Dot2x3()
+print("TestMatrix3x2Dot2x3 passed!")
+
+print("TestMatrix2x3Dot3x2...")
 TestMatrix2x3Dot3x2()
+print("TestMatrix2x3Dot3x2 passed!")
+
+print("--------------------------------------")
+print("Matrix tests passed!")

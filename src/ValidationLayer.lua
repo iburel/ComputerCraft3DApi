@@ -30,11 +30,12 @@
 
 -------------------------------------------------------------------
 
+local expect = dofile("rom/modules/main/cc/expect.lua").expect
 os.loadAPI("/Biou3D/Biou3D.lua")
 
 function Init(windowWidth, windowHeight)
-    expect(windowWidth, "number")
-    expect(windowHeight, "number")
+    expect(1, windowWidth, "number")
+    expect(2, windowHeight, "number")
 
     assert(windowWidth > 0, "windowWidth must be greater than 0")
     assert(windowHeight > 0, "windowHeight must be greater than 0")
@@ -43,13 +44,13 @@ function Init(windowWidth, windowHeight)
 end
 
 function CreateDataBuffer(datas)
-    expect(datas, "table")
+    expect(1, datas, "table")
 
     for i = 1, #datas do
-        expect(datas[i], "table")
+        expect(1, datas[i], "table")
         assert(#datas[i] == #datas[1], "All datas must have the same size")
         for j = 1, #datas[i] do
-            expect(datas[i][j], "number")
+            expect(1, datas[i][j], "number")
         end
     end
 
@@ -57,37 +58,37 @@ function CreateDataBuffer(datas)
 end
 
 function DestroyDataBuffer(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.DestroyDataBuffer(id)
 end
 
 function CreateVertexShader(shader)
-    expect(shader, "function")
+    expect(1, shader, "function")
 
     return Biou3D.CreateVertexShader(shader)
 end
 
 function DestroyVertexShader(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.DestroyVertexShader(id)
 end
 
 function CreateFragmentShader(shader)
-    expect(shader, "function")
+    expect(1, shader, "function")
 
     return Biou3D.CreateFragmentShader(shader)
 end
 
 function DestroyFragmentShader(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.DestroyFragmentShader(id)
 end
 
 function BindVertexBuffer(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.BindVertexBuffer(id)
 end
@@ -97,7 +98,7 @@ function UnbindVertexBuffer()
 end
 
 function BindDataBuffer(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.BindDataBuffer(id)
 end
@@ -107,7 +108,7 @@ function UnbindDataBuffer()
 end
 
 function BindVertexShader(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.BindVertexShader(id)
 end
@@ -117,7 +118,7 @@ function UnbindVertexShader()
 end
 
 function BindFragmentShader(id)
-    expect(id, "number")
+    expect(1, id, "number")
 
     Biou3D.BindFragmentShader(id)
 end

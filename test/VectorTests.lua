@@ -1,7 +1,9 @@
 -- Tests for vectors operations
 
-os.loadAPI("/Biou3D/src/Matrix/Vector.lua")
-os.loadAPI("/Biou3D/src/Matrix/Matrix.lua")
+os.loadAPI("/Biou3D/src/Matrix/VectorValidationLayer.lua")
+Vector = VectorValidationLayer
+os.loadAPI("/Biou3D/src/Matrix/MatrixValidationLayer.lua")
+Matrix = MatrixValidationLayer
 
 -- Test vector addition
 local function TestVectorAddition()
@@ -174,72 +176,149 @@ end
 
 -- Test vector dot with matrix
 local function TestVectorDotMatrix()
-    local vector = {1}
     local matrix = {{4}}
-    local result = Vector.DotMatrix(vector, matrix)
+    local vector = {1}
+    local result = Vector.DotMatrix(matrix, vector)
     assert(result[1] == 4)
 end
 
 local function TestVector2DotMatrix()
-    local vector = {1, 2}
     local matrix = {
-        {3, 4},
-        {5, 6}
+        {1, 2},
+        {3, 4}
     }
-    local result = Vector.Dot(vector, matrix)
-    assert(result[1] == 13)
-    assert(result[2] == 16)
+    local vector = {5, 6}
+    local result = Vector.DotMatrix(matrix, vector)
+    assert(result[1] == 17)
+    assert(result[2] == 39)
 end
 
 local function TestVector3DotMatrix()
-    local vector = {1, 2, 3}
     local matrix = {
+        {1, 2, 3},
         {4, 5, 6},
-        {7, 8, 9},
-        {10, 11, 12}
+        {7, 8, 9}
     }
-    local result = Vector.Dot(vector, matrix)
-    assert(result[1] == 58)
-    assert(result[2] == 64)
-    assert(result[3] == 70)
+    local vector = {10, 11, 12}
+    local result = Vector.DotMatrix(matrix, vector)
+    assert(result[1] == 68)
+    assert(result[2] == 167)
+    assert(result[3] == 266)
 end
 
 local function TestVector4DotMatrix()
-    local vector = {1, 2, 3, 4}
     local matrix = {
+        {1, 2, 3, 4},
         {5, 6, 7, 8},
         {9, 10, 11, 12},
-        {13, 14, 15, 16},
-        {17, 18, 19, 20}
+        {13, 14, 15, 16}
     }
-    local result = Vector.Dot(vector, matrix)
-    assert(result[1] == 250)
-    assert(result[2] == 260)
-    assert(result[3] == 270)
-    assert(result[4] == 280)
+    local vector = {17, 18, 19, 20}
+    local result = Vector.DotMatrix(matrix, vector)
+    assert(result[1] == 190)
+    assert(result[2] == 486)
+    assert(result[3] == 782)
+    assert(result[4] == 1078)
 end
 
+print("Running matrix tests...")
+print("--------------------------------------")
+
+print("TestVectorAddition...")
 TestVectorAddition()
+print("TestVectorAddition passed!")
+
+print("TestVector2Addition...")
 TestVector2Addition()
+print("TestVector2Addition passed!")
+
+print("TestVector3Addition...")
 TestVector3Addition()
+print("TestVector3Addition passed!")
+
+print("TestVector4Addition...")
 TestVector4Addition()
+print("TestVector4Addition passed!")
+
+print("TestVectorSubtraction...")
 TestVectorSubtraction()
+print("TestVectorSubtraction passed!")
+
+print("TestVector2Subtraction...")
 TestVector2Subtraction()
+print("TestVector2Subtraction passed!")
+
+print("TestVector3Subtraction...")
 TestVector3Subtraction()
+print("TestVector3Subtraction passed!")
+
+print("TestVector4Subtraction...")
 TestVector4Subtraction()
+print("TestVector4Subtraction passed!")
+
+print("TestVectorMultiplication...")
 TestVectorMultiplication()
+print("TestVectorMultiplication passed!")
+
+print("TestVector2Multiplication...")
 TestVector2Multiplication()
+print("TestVector2Multiplication passed!")
+
+print("TestVector3Multiplication...")
 TestVector3Multiplication()
+print("TestVector3Multiplication passed!")
+
+print("TestVector4Multiplication...")
 TestVector4Multiplication()
+print("TestVector4Multiplication passed!")
+
+print("TestVectorDivision...")
 TestVectorDivision()
+print("TestVectorDivision passed!")
+
+print("TestVector2Division...")
 TestVector2Division()
+print("TestVector2Division passed!")
+
+print("TestVector3Division...")
 TestVector3Division()
+print("TestVector3Division passed!")
+
+print("TestVector4Division...")
 TestVector4Division()
+print("TestVector4Division passed!")
+
+print("TestVectorDot...")
 TestVectorDot()
+print("TestVectorDot passed!")
+
+print("TestVector2Dot...")
 TestVector2Dot()
+print("TestVector2Dot passed!")
+
+print("TestVector3Dot...")
 TestVector3Dot()
+print("TestVector3Dot passed!")
+
+print("TestVector4Dot...")
 TestVector4Dot()
+print("TestVector4Dot passed!")
+
+print("TestVectorDotMatrix...")
 TestVectorDotMatrix()
+print("TestVectorDotMatrix passed!")
+
+print("TestVector2DotMatrix...")
 TestVector2DotMatrix()
+print("TestVector2DotMatrix passed!")
+
+print("TestVector3DotMatrix...")
 TestVector3DotMatrix()
+print("TestVector3DotMatrix passed!")
+
+print("TestVector4DotMatrix...")
 TestVector4DotMatrix()
+print("TestVector4DotMatrix passed!")
+
+print("--------------------------------------")
+print("Matrix tests passed!")
