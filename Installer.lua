@@ -30,7 +30,7 @@ end
 
 for i, file in ipairs(files) do
     print("Downloading " .. file .. "...")
-    local response = http.get("https://raw.githubusercontent.com/iburel/ComputerCraft3DApi/v1.0.0/" .. file)
+    local response = http.get("https://raw.githubusercontent.com/iburel/ComputerCraft3DApi/master/" .. file)
     if response == nil then
         error("Error while downloading " .. file)
     end
