@@ -4,7 +4,8 @@ This is a 3D Api for ComputerCraft. The goal is to make something close to OpenG
 
 # Installation
 
-master : `wget run https://raw.githubusercontent.com/iburel/ComputerCraft3DApi/master/Installer.lua`
+- master : `wget run https://raw.githubusercontent.com/iburel/ComputerCraft3DApi/master/Installer.lua`
+- v1.0.0 : `wget run https://raw.githubusercontent.com/iburel/ComputerCraft3DApi/v1.0.0/Installer.lua`
 
 # Supported version
 
