@@ -1,6 +1,7 @@
 -- Sample to test a simple triangle
 
 os.loadAPI("/Biou3D/Biou3D.lua")
+os.loadAPI("/Biou3D/sample/Image.lua")
 
 -- Init Biou3D
 local monitor = peripheral.find("monitor")
@@ -32,9 +33,5 @@ Biou3D.UnbindVertexBuffer()
 Biou3D.DestroyDataBuffer(vertexBuffer)
 
 -- Display the image
-term.clear()
-for i = 1, #image do
-    paintutils.drawPixel(i % winX, math.floor(i / winX), image[i])
-end
-
+Image.Display(term, image)
 

@@ -3,6 +3,7 @@
 os.loadAPI("/Biou3D/Biou3D.lua")
 os.loadAPI("/Biou3D/src/Matrix/Vector.lua")
 os.loadAPI("/Biou3D/src/Matrix/Matrix.lua")
+os.loadAPI("/Biou3D/sample/Image.lua")
 
 -- Init Biou3D
 local monitor = peripheral.find("monitor")
@@ -58,16 +59,16 @@ local vertexBuffer = Biou3D.CreateDataBuffer({
 local colorBuffer = Biou3D.CreateDataBuffer({
     { 1 }, { 1 }, { 1 },
     { 2 }, { 2 }, { 2 },
-    { 4 }, { 4 }, { 4 },
+    { 3 }, { 3 }, { 3 },
     { 2 }, { 2 }, { 2 },
     { 1 }, { 1 }, { 1 },
+    { 3 }, { 3 }, { 3 },
     { 4 }, { 4 }, { 4 },
-    { 64 }, { 64 }, { 64 },
-    { 128 }, { 128 }, { 128 },
-    { 128 }, { 128 }, { 128 },
-    { 512 }, { 512 }, { 512 },
-    { 512 }, { 512 }, { 512 },
-    { 64 }, { 64 }, { 64 },
+    { 5 }, { 5 }, { 5 },
+    { 5 }, { 5 }, { 5 },
+    { 6 }, { 6 }, { 6 },
+    { 6 }, { 6 }, { 6 },
+    { 4 }, { 4 }, { 4 },
 })
 
 -- Create vertex shader
@@ -118,11 +119,7 @@ while true do
     Biou3D.UnbindVertexBuffer()
 
     -- Display the image
-    term.clear()
-    for i = 1, #image do
-        image[i] = math.floor(image[i] + 0.5)
-        paintutils.drawPixel(i % winX, math.floor(i / winX), image[i])
-    end
+    Image.Display(term, image)
 
-    sleep(0.1)
+    sleep(0.016)
 end

@@ -25,7 +25,7 @@
 -- Biou3D.BindFragmentShader(int id) -> void
 -- Biou3D.UnbindFragmentShader() -> void
 
--- Biou3D.Draw() -> int[]
+-- Biou3D.Draw() -> int[][]
 
 -------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ vertexShaders[1] = defaultVertexShader
 
 -- Set default fragment shader to index 1
 local function defaultFragmentShader(winX, winY, x, y, z, dataBuffers)
-    return colors.gray, z
+    return 7, z
 end
 
 fragmentShaders[1] = defaultFragmentShader
@@ -208,10 +208,15 @@ function Draw()
 
     -- Rasterization
     local image = {}
+
     local depthBuffer = {}
-    for i = 1, winX * winY do
-        image[i] = colors.black
-        depthBuffer[i] = -1
+    for i = 1, winY do
+        image[i] = {}
+        depthBuffer[i] = {}
+        for j = 1, winX do
+            image[i][j] = 16
+            depthBuffer[i][j] = -1
+        end
     end
 
     for i = 1, #validTriangles do
@@ -271,10 +276,9 @@ function Draw()
                     local color, depth = fragmentShader(winX, winY, x, y, z, interpolatedBuffers)
 
                     -- Draw pixel
-                    local index = y * winX + x
-                    if depthBuffer[index] < depth then
-                        image[index] = color
-                        depthBuffer[index] = depth
+                    if depthBuffer[y][x] < depth then
+                        image[y][x] = color
+                        depthBuffer[y][x] = depth
                     end
                 end
             end

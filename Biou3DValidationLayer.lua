@@ -26,7 +26,7 @@
 -- ValidationLayer.BindFragmentShader(int id) -> void
 -- ValidationLayer.UnbindFragmentShader() -> void
 
--- ValidationLayer.Draw() -> int[]
+-- ValidationLayer.Draw() -> int[][]
 
 -------------------------------------------------------------------
 
