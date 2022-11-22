@@ -89,6 +89,8 @@ end
 
 local fragmentShader = Biou3D.CreateFragmentShader(fragmentShaderFunc)
 
+local lastColorsLines = {}
+
 while true do
     -- Bind the vertex buffer
     Biou3D.BindVertexBuffer(vertexBuffer)
@@ -119,7 +121,9 @@ while true do
     Biou3D.UnbindVertexBuffer()
 
     -- Display the image
-    Image.Display(term, image)
+    local colorsLines = Image.ConvertToArrayOfString(image)
+    Image.Display(term, colorsLines, lastColorsLines)
+    lastColorsLines = colorsLines
 
     sleep(0.016)
 end

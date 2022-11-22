@@ -33,5 +33,5 @@ Biou3D.UnbindVertexBuffer()
 Biou3D.DestroyDataBuffer(vertexBuffer)
 
 -- Display the image
-Image.Display(term, image)
-
+local colorsLines = Image.ConvertToArrayOfString(image)
+Image.Display(term, colorsLines, {})
